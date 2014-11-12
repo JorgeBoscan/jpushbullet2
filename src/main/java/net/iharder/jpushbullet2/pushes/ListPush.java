@@ -12,6 +12,10 @@ public class ListPush implements SendPush {
     @Expose
     private final String email;
     @Expose
+    private final String channel_tag;
+    @Expose
+    private final String client_iden;
+    @Expose
     private final String type = "list";
     @Expose
     private final String title;
@@ -23,6 +27,16 @@ public class ListPush implements SendPush {
         this.email = builder.email;
         this.title = builder.title;
         this.items = builder.items;
+        this.channel_tag = builder.channel_tag;
+        this.client_iden = builder.client_iden;
+    }
+
+    public String getChannel_tag() {
+        return channel_tag;
+    }
+
+    public String getClient_iden() {
+        return client_iden;
     }
 
     public String getDevice_iden() {
@@ -48,8 +62,20 @@ public class ListPush implements SendPush {
     public static class ListPushBuilder {
         private String device_iden;
         private String email;
+        private String channel_tag;
+        private String client_iden;
         private String title;
         private List<String> items = new ArrayList<String>();
+
+        public ListPushBuilder channelTag(final String channelTag) {
+            this.channel_tag = channelTag;
+            return this;
+        }
+
+        public ListPushBuilder clientIden(final String clientIden) {
+            this.client_iden = clientIden;
+            return this;
+        }
 
         public ListPushBuilder title(final String title) {
             this.title = title;

@@ -1,6 +1,7 @@
 package net.iharder.jpushbullet2.pushes;
 
 import com.google.gson.annotations.Expose;
+import net.iharder.jpushbullet2.PushbulletException;
 
 import java.io.File;
 
@@ -11,6 +12,10 @@ public class FilePush implements SendPush {
     @Expose
     private final String email;
     @Expose
+    private final String channel_tag;
+    @Expose
+    private final String client_iden;
+    @Expose
     private final String type = "file";
     @Expose
     private final String file_name;
@@ -20,7 +25,28 @@ public class FilePush implements SendPush {
     private final String file_url;
     @Expose
     private final String body;
+
     private final File file;
+
+    private FilePush(FilePushBuilder builder) {
+        this.device_iden = builder.device_iden;
+        this.email = builder.email;
+        this.body = builder.body;
+        this.file = builder.file;
+        this.file_name = builder.file_name;
+        this.file_type = builder.file_type;
+        this.file_url = builder.file_url;
+        this.channel_tag = builder.channel_tag;
+        this.client_iden = builder.client_iden;
+    }
+
+    public String getChannel_tag() {
+        return channel_tag;
+    }
+
+    public String getClient_iden() {
+        return client_iden;
+    }
 
     public File getFile() {
         return file;
@@ -54,24 +80,22 @@ public class FilePush implements SendPush {
         return body;
     }
 
-    private FilePush(FilePushBuilder builder) {
-        this.device_iden = builder.device_iden;
-        this.email = builder.email;
-        this.body = builder.body;
-        this.file = builder.file;
-        this.file_name = builder.file_name;
-        this.file_type = builder.file_type;
-        this.file_url = builder.file_url;
-    }
-
-    public static class FilePushBuilder {
-        private String device_iden;
-        private String email;
+    public static class FilePushBuilder extends BaseBuilder {
         private String body;
         private String file_name;
         private String file_type;
         private String file_url;
         private File file;
+
+        public FilePushBuilder channelTag(final String channelTag) {
+            this.channel_tag = channelTag;
+            return this;
+        }
+
+        public FilePushBuilder clientIden(final String clientIden) {
+            this.client_iden = clientIden;
+            return this;
+        }
 
         public FilePushBuilder fileName(final String fileName) {
             this.file_name = fileName;
@@ -108,7 +132,8 @@ public class FilePush implements SendPush {
             return this;
         }
 
-        public SendPush create() {
+        public SendPush create() throws PushbulletException {
+            validateNumberOfTargets();
             return new FilePush(this);
         }
     }

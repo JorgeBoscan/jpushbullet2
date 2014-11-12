@@ -1,6 +1,7 @@
 package net.iharder.jpushbullet2.pushes;
 
 import com.google.gson.annotations.Expose;
+import net.iharder.jpushbullet2.PushbulletException;
 
 public class LinkPush implements SendPush {
 
@@ -8,6 +9,10 @@ public class LinkPush implements SendPush {
     private final String device_iden;
     @Expose
     private final String email;
+    @Expose
+    private final String channel_tag;
+    @Expose
+    private final String client_iden;
     @Expose
     private final String type = "link";
     @Expose
@@ -23,6 +28,16 @@ public class LinkPush implements SendPush {
         this.title = builder.title;
         this.body = builder.body;
         this.url = builder.url;
+        this.channel_tag = builder.channel_tag;
+        this.client_iden = builder.client_iden;
+    }
+
+    public String getChannel_tag() {
+        return channel_tag;
+    }
+
+    public String getClient_iden() {
+        return client_iden;
     }
 
     public String getDevice_iden() {
@@ -49,12 +64,20 @@ public class LinkPush implements SendPush {
         return url;
     }
 
-    public static class LinkPushBuilder {
-        private String device_iden;
-        private String email;
+    public static class LinkPushBuilder extends BaseBuilder {
         private String title;
         private String body;
         private String url;
+
+        public LinkPushBuilder channelTag(final String channelTag) {
+            this.channel_tag = channelTag;
+            return this;
+        }
+
+        public LinkPushBuilder clientIden(final String clientIden) {
+            this.client_iden = clientIden;
+            return this;
+        }
 
         public LinkPushBuilder url(final String url) {
             this.url = url;
@@ -81,7 +104,8 @@ public class LinkPush implements SendPush {
             return this;
         }
 
-        public SendPush create() {
+        public SendPush create() throws PushbulletException {
+            validateNumberOfTargets();
             return new LinkPush(this);
         }
     }
