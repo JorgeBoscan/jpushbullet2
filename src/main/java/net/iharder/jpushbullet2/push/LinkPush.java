@@ -1,11 +1,9 @@
-package net.iharder.jpushbullet2.pushes;
+package net.iharder.jpushbullet2.push;
 
 import com.google.gson.annotations.Expose;
+import net.iharder.jpushbullet2.PushbulletException;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class ListPush implements SendPush {
+public class LinkPush implements SendPush {
 
     @Expose
     private final String device_iden;
@@ -16,17 +14,20 @@ public class ListPush implements SendPush {
     @Expose
     private final String client_iden;
     @Expose
-    private final String type = "list";
+    private final String type = "link";
     @Expose
     private final String title;
     @Expose
-    private final List<String> items;
+    private final String body;
+    @Expose
+    private final String url;
 
-    public ListPush(ListPushBuilder builder) {
+    private LinkPush(LinkPushBuilder builder) {
         this.device_iden = builder.device_iden;
         this.email = builder.email;
         this.title = builder.title;
-        this.items = builder.items;
+        this.body = builder.body;
+        this.url = builder.url;
         this.channel_tag = builder.channel_tag;
         this.client_iden = builder.client_iden;
     }
@@ -55,50 +56,57 @@ public class ListPush implements SendPush {
         return title;
     }
 
-    public List<String> getItems() {
-        return items;
+    public String getBody() {
+        return body;
     }
 
-    public static class ListPushBuilder {
-        private String device_iden;
-        private String email;
-        private String channel_tag;
-        private String client_iden;
-        private String title;
-        private List<String> items = new ArrayList<String>();
+    public String getUrl() {
+        return url;
+    }
 
-        public ListPushBuilder channelTag(final String channelTag) {
+    public static class LinkPushBuilder extends BaseBuilder {
+        private String title;
+        private String body;
+        private String url;
+
+        public LinkPushBuilder channelTag(final String channelTag) {
             this.channel_tag = channelTag;
             return this;
         }
 
-        public ListPushBuilder clientIden(final String clientIden) {
+        public LinkPushBuilder clientIden(final String clientIden) {
             this.client_iden = clientIden;
             return this;
         }
 
-        public ListPushBuilder title(final String title) {
+        public LinkPushBuilder url(final String url) {
+            this.url = url;
+            return this;
+        }
+
+        public LinkPushBuilder title(final String title) {
             this.title = title;
             return this;
         }
 
-        public ListPushBuilder item(final String item) {
-            items.add(item);
+        public LinkPushBuilder body(final String body) {
+            this.body = body;
             return this;
         }
 
-        public ListPushBuilder email(final String email) {
+        public LinkPushBuilder email(final String email) {
             this.email = email;
             return this;
         }
 
-        public ListPushBuilder deviceIden(final String deviceIden) {
+        public LinkPushBuilder deviceIden(final String deviceIden) {
             this.device_iden = deviceIden;
             return this;
         }
 
-        public SendPush create() {
-            return new ListPush(this);
+        public SendPush create() throws PushbulletException {
+            validateNumberOfTargets();
+            return new LinkPush(this);
         }
     }
 }

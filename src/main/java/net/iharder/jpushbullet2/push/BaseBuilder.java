@@ -1,4 +1,4 @@
-package net.iharder.jpushbullet2.pushes;
+package net.iharder.jpushbullet2.push;
 
 import net.iharder.jpushbullet2.PushbulletException;
 

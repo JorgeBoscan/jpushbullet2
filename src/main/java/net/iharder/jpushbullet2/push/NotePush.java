@@ -1,4 +1,4 @@
-package net.iharder.jpushbullet2.pushes;
+package net.iharder.jpushbullet2.push;
 
 import com.google.gson.annotations.Expose;
 

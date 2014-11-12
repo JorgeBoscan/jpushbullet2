@@ -33,8 +33,8 @@ import javax.websocket.WebSocketContainer;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import net.iharder.jpushbullet2.pushes.FilePush;
-import net.iharder.jpushbullet2.pushes.SendPush;
+import net.iharder.jpushbullet2.push.FilePush;
+import net.iharder.jpushbullet2.push.SendPush;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
