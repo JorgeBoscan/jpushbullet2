@@ -133,7 +133,7 @@ public class Examples {
     }   // end GetPushesAsync
     
     
-    public static class SendNote {
+    /*public static class SendNote {
         public static void main(String[] args) throws PushbulletException{
             if( args.length < 4 ){
                 System.out.println("Arguments: API_KEY destDevIden title body");
@@ -152,14 +152,14 @@ public class Examples {
             if( args.length < 3 ){
                 System.out.println("Arguments: API_KEY title body");
             } else {
-                System.out.println("Calling sendNoteAsync on thread " + Thread.currentThread() );
+                System.out.println("Calling sendPushAsync on thread " + Thread.currentThread() );
                 PushbulletClient client = new PushbulletClient( args[0] );
-                Future<String> fut = client.sendNoteAsync(null, args[1], args[2], new Callback<String>(){
+                Future<String> fut = client.sendPushAsync(null, args[1], args[2], new Callback<String>() {
                     @Override
                     public void completed(String result, PushbulletException ex) {
-                        System.out.println( "Result complted on thread " + Thread.currentThread() );
-                        System.out.println( "Result: " + result );
-                        System.out.println( "Exception: " + ex );
+                        System.out.println("Result complted on thread " + Thread.currentThread());
+                        System.out.println("Result: " + result);
+                        System.out.println("Exception: " + ex);
                     }
                 });
                 Thread.sleep(1000);
@@ -181,7 +181,7 @@ public class Examples {
                 System.out.println( "Result: " + result );
             }
         }   // end main
-    }   // end Note
+    }   // end Note*/
     
     
     
