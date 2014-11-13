@@ -404,8 +404,7 @@ public class PushbulletClient {
      */
     public String deleteDevice(String deviceIden) throws PushbulletException {
         HttpDelete delete = new HttpDelete(API_DEVICES_URL + "/" + deviceIden);
-        String result = doHttp(delete);
-        return result;
+        return doHttp(delete);
     }
 
 
