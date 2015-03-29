@@ -1,6 +1,7 @@
 package net.iharder;
 
 import net.iharder.jpushbullet2.Contact;
+import net.iharder.jpushbullet2.Device;
 import net.iharder.jpushbullet2.PushbulletClient;
 import net.iharder.jpushbullet2.PushbulletException;
 import net.iharder.jpushbullet2.push.*;
@@ -14,9 +15,19 @@ public class Test {
         PushbulletClient client = new PushbulletClient("v1WftnSWfoF68XiT1LFk8Sj7ncIryO2O8nujv6u7ZiELc");
         File file = new File("/home/jorge/Pictures/asepriteicon.jpg");
         List<Contact> contacts = client.getContacts();
+        List<Device> devices = client.getDevices();
 
+        for (Device device : devices) {
+            SendPush notePush = new NotePush.NotePushBuilder()
+                    .deviceIden(device.getIden())
+                    .title("Title MEGA ULTRA AWESOMEFEST")
+                    .body("UBER MEGA BODY FTY")
+                    .create();
+            String result = client.sendPush(notePush);
+            System.out.println("result = " + result);
+        }
         SendPush notePush = new NotePush.NotePushBuilder()
-                .email(contacts.get(0).getEmail())
+                .deviceIden(devices.get(0).getIden())
                 .title("Title MEGA ULTRA AWESOMEFEST")
                 .body("UBER MEGA BODY FTY")
                 .create();
